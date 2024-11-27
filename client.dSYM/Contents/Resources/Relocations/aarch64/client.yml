@@ -1,0 +1,12 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     client
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _place_ships, symObjAddr: 0x0, symBinAddr: 0x100003918, symSize: 0x160 }
+  - { offsetInCU: 0x4D, offset: 0x4D, size: 0x8, addend: 0x0, symName: _board, symBinAddr: 0x100008000, symSize: 0x0 }
+  - { offsetInCU: 0x97, offset: 0x97, size: 0x8, addend: 0x0, symName: _place_ships, symObjAddr: 0x0, symBinAddr: 0x100003918, symSize: 0x160 }
+  - { offsetInCU: 0xF3, offset: 0xF3, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x160, symBinAddr: 0x100003A78, symSize: 0x174 }
+  - { offsetInCU: 0x26, offset: 0x24A, size: 0x8, addend: 0x0, symName: _initialize_board, symObjAddr: 0x0, symBinAddr: 0x100003BEC, symSize: 0x94 }
+  - { offsetInCU: 0x41, offset: 0x265, size: 0x8, addend: 0x0, symName: _initialize_board, symObjAddr: 0x0, symBinAddr: 0x100003BEC, symSize: 0x94 }
+  - { offsetInCU: 0x9D, offset: 0x2C1, size: 0x8, addend: 0x0, symName: _print_board, symObjAddr: 0x94, symBinAddr: 0x100003C80, symSize: 0x14C }
+...
