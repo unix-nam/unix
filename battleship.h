@@ -5,13 +5,18 @@
 #define PORT 12345
 
 typedef struct {
+    char *name;
+    int size;
+} Ship;
+
+typedef struct {
     int x, y;       // 공격 좌표
 } Attack;
 
-// 보드 초기화 함수
+// 함수 선언
 void initialize_board(char board[BOARD_SIZE][BOARD_SIZE]);
-
-// 보드 출력 함수
 void print_board(char board[BOARD_SIZE][BOARD_SIZE]);
+int is_valid_placement(char board[BOARD_SIZE][BOARD_SIZE], int x, int y, int size, char orientation);
+void place_ship(char board[BOARD_SIZE][BOARD_SIZE], int x, int y, int size, char orientation);
 
 #endif

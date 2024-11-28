@@ -2,11 +2,16 @@
 triple:          'arm64-apple-darwin'
 binary-path:     client
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _place_ships, symObjAddr: 0x0, symBinAddr: 0x100003918, symSize: 0x160 }
-  - { offsetInCU: 0x4D, offset: 0x4D, size: 0x8, addend: 0x0, symName: _board, symBinAddr: 0x100008000, symSize: 0x0 }
-  - { offsetInCU: 0x97, offset: 0x97, size: 0x8, addend: 0x0, symName: _place_ships, symObjAddr: 0x0, symBinAddr: 0x100003918, symSize: 0x160 }
-  - { offsetInCU: 0xF3, offset: 0xF3, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x160, symBinAddr: 0x100003A78, symSize: 0x174 }
-  - { offsetInCU: 0x26, offset: 0x24A, size: 0x8, addend: 0x0, symName: _initialize_board, symObjAddr: 0x0, symBinAddr: 0x100003BEC, symSize: 0x94 }
-  - { offsetInCU: 0x41, offset: 0x265, size: 0x8, addend: 0x0, symName: _initialize_board, symObjAddr: 0x0, symBinAddr: 0x100003BEC, symSize: 0x94 }
-  - { offsetInCU: 0x9D, offset: 0x2C1, size: 0x8, addend: 0x0, symName: _print_board, symObjAddr: 0x94, symBinAddr: 0x100003C80, symSize: 0x14C }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _print_combined_board, symObjAddr: 0x0, symBinAddr: 0x100002F2C, symSize: 0x24C }
+  - { offsetInCU: 0x4D, offset: 0x4D, size: 0x8, addend: 0x0, symName: _ships, symObjAddr: 0xB38, symBinAddr: 0x100008000, symSize: 0x0 }
+  - { offsetInCU: 0xAE, offset: 0xAE, size: 0x8, addend: 0x0, symName: _board, symBinAddr: 0x100008050, symSize: 0x0 }
+  - { offsetInCU: 0xD5, offset: 0xD5, size: 0x8, addend: 0x0, symName: _enemy_board, symBinAddr: 0x1000080B4, symSize: 0x0 }
+  - { offsetInCU: 0x10D, offset: 0x10D, size: 0x8, addend: 0x0, symName: _print_combined_board, symObjAddr: 0x0, symBinAddr: 0x100002F2C, symSize: 0x24C }
+  - { offsetInCU: 0x1AF, offset: 0x1AF, size: 0x8, addend: 0x0, symName: _place_and_send_ships, symObjAddr: 0x24C, symBinAddr: 0x100003178, symSize: 0x1A8 }
+  - { offsetInCU: 0x227, offset: 0x227, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x3F4, symBinAddr: 0x100003320, symSize: 0x3A8 }
+  - { offsetInCU: 0x26, offset: 0x37A, size: 0x8, addend: 0x0, symName: _initialize_board, symObjAddr: 0x0, symBinAddr: 0x1000036C8, symSize: 0x94 }
+  - { offsetInCU: 0x41, offset: 0x395, size: 0x8, addend: 0x0, symName: _initialize_board, symObjAddr: 0x0, symBinAddr: 0x1000036C8, symSize: 0x94 }
+  - { offsetInCU: 0x9D, offset: 0x3F1, size: 0x8, addend: 0x0, symName: _print_board, symObjAddr: 0x94, symBinAddr: 0x10000375C, symSize: 0x14C }
+  - { offsetInCU: 0x115, offset: 0x469, size: 0x8, addend: 0x0, symName: _is_valid_placement, symObjAddr: 0x1E0, symBinAddr: 0x1000038A8, symSize: 0x190 }
+  - { offsetInCU: 0x1AD, offset: 0x501, size: 0x8, addend: 0x0, symName: _place_ship, symObjAddr: 0x370, symBinAddr: 0x100003A38, symSize: 0x110 }
 ...
