@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include "battleship.h"
-#define NUM_SHIPS 1
+#define NUM_SHIPS 5
 
 // 보드
 char board[BOARD_SIZE][BOARD_SIZE];       // 자신의 배치 보드
