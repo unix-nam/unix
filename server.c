@@ -56,11 +56,7 @@ int handle_attack(int attacker, int defender) {
     } else {
         strcpy(result, "실패");
     }
-
-    send(client_sockets[attacker], result, sizeof(result), 0);
-
-    printf("플레이어 %d의 공격: (%d, %d)\n", attacker + 1, attack.x, attack.y);
-
+    
     // 게임 종료 조건 검사
     game_over = 1;
     for (int i = 0; i < BOARD_SIZE; i++) {
@@ -71,16 +67,18 @@ int handle_attack(int attacker, int defender) {
         }
     }
 
-    char msg[30];
     if (game_over == 1) {
-        // 승리 메시지 설정
-        strcpy(msg, "승리하였습니다.");
-        send(client_sockets[attacker], msg, sizeof(msg), 0);
-
         // 패배 메시지 설정
-        strcpy(msg, "패배하였습니다.");
-        send(client_sockets[defender], msg, sizeof(msg), 0);
+        strcpy(result, "패배하였습니다.");
+        send(client_sockets[defender], result, sizeof(result), 0);
+
+        // 승리 메시지 설정
+        strcpy(result, "승리하였습니다.");
     }
+
+    send(client_sockets[attacker], result, sizeof(result), 0);
+
+    printf("플레이어 %d의 공격: (%d, %d)\n", attacker + 1, attack.x, attack.y);
 
     return 0;
 }

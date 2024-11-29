@@ -125,7 +125,7 @@ int main() {
         }
 
         // 좌표 유효성 검사
-        if (attack.x < 0 || attack.x >= BOARD_SIZE || attack.y < 0 || attack.y >= BOARD_SIZE) {
+        if (attack.x < 0 || attack.x >= BOARD_SIZE || attack.y < 0 || attack.y >= BOARD_SIZE || enemy_board[attack.x][attack.y] != '.') {
             printf("유효하지 않은 좌표입니다. 보드 범위 내의 좌표를 입력해주세요 (0-%d).\n", BOARD_SIZE - 1);
             continue;
         }
@@ -148,7 +148,7 @@ int main() {
         }
 
         // 공격 결과 표시
-        if (strstr(result, "명중")) {
+        if (strstr(result, "명중") || strstr(result, "승리하였습니다.")) {
             enemy_board[attack.x][attack.y] = 'O'; // 명중
         } else {
             enemy_board[attack.x][attack.y] = 'X'; // 실패
