@@ -25,7 +25,7 @@ void receive_board(int client_socket, int player) {
         perror("보드 수신 실패");
         exit(EXIT_FAILURE);
     }
-    printf("플레이어 %d 보드 수신 완료:\n", player + 1);
+    printf("플레이어 %d 보드 수신 완료.\n%d 보드는 다음과 같습니다.\n\n", player + 1);
     print_board(boards[player]);
 }
 

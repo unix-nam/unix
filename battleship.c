@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "battleship.h"
+#include <ctype.h>
 
 // 보드 초기화
 void initialize_board(char board[BOARD_SIZE][BOARD_SIZE]) {
@@ -27,8 +28,19 @@ void print_board(char board[BOARD_SIZE][BOARD_SIZE]) {
     fflush(stdout); // 출력 강제 플러시
 }
 
+// 숫자인지 검증
+int is_number(char *str) {
+    
+    while (*str) {
+        if (!isdigit(*str)) return 0;
+        str++;
+    }
+    
+    return 1;
+}
+
 // 배치 유효성 검사
-int is_valid_placement(char board[BOARD_SIZE][BOARD_SIZE], int x, int y, int size, char orientation) {
+int is_valid_placement(char board[BOARD_SIZE][BOARD_SIZE], int x, int y, int size, char orientation) {    
     if (orientation == 'H') {
         if (y + size > BOARD_SIZE) return 0;
         for (int i = 0; i < size; i++) {

@@ -18,5 +18,5 @@ void initialize_board(char board[BOARD_SIZE][BOARD_SIZE]);
 void print_board(char board[BOARD_SIZE][BOARD_SIZE]);
 int is_valid_placement(char board[BOARD_SIZE][BOARD_SIZE], int x, int y, int size, char orientation);
 void place_ship(char board[BOARD_SIZE][BOARD_SIZE], int x, int y, int size, char orientation);
-
+int is_number(char *str);
 #endif

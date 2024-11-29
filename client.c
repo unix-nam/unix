@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include "battleship.h"
+
 #define NUM_SHIPS 5
 
 // 보드
@@ -26,10 +27,10 @@ void print_combined_board() {
     // 콘솔 화면 초기화 (ANSI 이스케이프 시퀀스)
     printf("\033[H\033[J"); // 화면 초기화 및 커서 이동
 
-    printf("\n내 배 보드           | 공격 결과 보드\n");
+    printf("\n내 배 보드                | 공격 결과 보드\n");
     printf("  ");
     for (int i = 0; i < BOARD_SIZE; i++) printf("%d ", i);
-    printf("      ");
+    printf("         ");
     for (int i = 0; i < BOARD_SIZE; i++) printf("%d ", i);
     printf("\n");
 
@@ -49,18 +50,28 @@ void print_combined_board() {
     fflush(stdout); // 출력 강제 플러시
 }
 
-
 // 배를 배치하고 서버로 보드 전송
 void place_and_send_ships(int sock) {
     printf("배를 배치하세요:\n");
     for (int i = 0; i < NUM_SHIPS; i++) {
         int x, y;
         char orientation;
+        char buffer_x[20], buffer_y[20]; // 숫자 확인을 위한 임시 버퍼
 
         while (1) {
             printf("%s (크기: %d칸)을 배치합니다.\n", ships[i].name, ships[i].size);
             printf("배치 시작 좌표 (x, y)와 방향(H: 가로, V: 세로)을 입력하세요: ");
-            scanf("%d %d %c", &x, &y, &orientation);
+            
+            if(scanf("%s %s %c", buffer_x, buffer_y, &orientation) == 3) {
+                if(is_number(buffer_x) && is_number(buffer_y)) {
+                    x = atoi(buffer_x);
+                    y = atoi(buffer_y);
+                }
+            }
+            else {
+                printf("유효하지 않은 숫자입니다. 다시 시도하세요.\n");
+                continue;
+            }
 
             if (is_valid_placement(board, x, y, ships[i].size, orientation)) {
                 place_ship(board, x, y, ships[i].size, orientation);
@@ -68,6 +79,7 @@ void place_and_send_ships(int sock) {
                 break;
             } else {
                 printf("유효하지 않은 배치입니다. 다시 시도하세요.\n");
+                continue;
             }
         }
     }
@@ -125,7 +137,7 @@ int main() {
         }
 
         // 좌표 유효성 검사
-        if (attack.x < 0 || attack.x >= BOARD_SIZE || attack.y < 0 || attack.y >= BOARD_SIZE || enemy_board[attack.x][attack.y] != '.') {
+        if (attack.x < 0 || attack.x >= BOARD_SIZE ||attack.y < 0 || attack.y >= BOARD_SIZE || enemy_board[attack.x][attack.y] != '.') {
             printf("유효하지 않은 좌표입니다. 보드 범위 내의 좌표를 입력해주세요 (0-%d).\n", BOARD_SIZE - 1);
             continue;
         }
