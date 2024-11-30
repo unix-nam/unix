@@ -10,7 +10,7 @@
 #include <errno.h>
 #include "battleship.h"
 
-#define NUM_SHIPS 1
+#define NUM_SHIPS 5
 #define BUFFER_SIZE 1024 // Increased buffer size
 
 // 보드
@@ -26,10 +26,10 @@ int last_attack_y = -1;
 
 // 배 정보
 Ship ships[] = {
-    // {"항공모함", 5},
-    // {"전함", 4},
-    // {"순양함", 3},
-    // {"잠수함", 3},
+    {"항공모함", 5},
+    {"전함", 4},
+    {"순양함", 3},
+    {"잠수함", 3},
     {"구축함", 2}
 };
 
