@@ -1,5 +1,8 @@
+// battleship.h
 #ifndef BATTLESHIP_H
 #define BATTLESHIP_H
+
+#include <stdint.h>
 
 #define BOARD_SIZE 10
 #define PORT 12345
@@ -10,7 +13,7 @@ typedef struct {
 } Ship;
 
 typedef struct {
-    int x, y;       // 공격 좌표
+    int32_t x, y;       // 공격 좌표 (고정 크기)
 } Attack;
 
 // 함수 선언
