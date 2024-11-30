@@ -290,10 +290,10 @@ int main() {
                         board[opp_x][opp_y] = 'X';
                         printf("상대방이 (%d, %d)을 공격했습니다. 명중!\n", opp_x, opp_y);
                     }
-                    // else if (strcmp(opp_result, "MISS") == 0) {
-                    //     board[opp_x][opp_y] = 'O';
-                    //     printf("상대방이 (%d, %d)을 공격했습니다. 실패.\n", opp_x, opp_y);
-                    // }
+                    else if (strcmp(opp_result, "MISS") == 0) {
+                        // board[opp_x][opp_y] = 'O';
+                        printf("상대방이 (%d, %d)을 공격했습니다. 실패.\n", opp_x, opp_y);
+                    }
                     print_combined_board();
                 } else {
                     printf("잘못된 OPPONENT_ATTACK 메시지 형식: %s\n", line);
