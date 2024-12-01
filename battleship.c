@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "battleship.h"
+#include <time.h>
 
 // 보드 초기화
 void initialize_board(char board[BOARD_SIZE][BOARD_SIZE]) {
@@ -57,4 +58,26 @@ void place_ship(char board[BOARD_SIZE][BOARD_SIZE], int x, int y, int size, char
             board[x + i][y] = 'S';
         }
     }
+}
+
+// 게임 결과 저장
+void save_game_result(int winner, int loser) {
+    FILE* file = fopen("game_result.txt", "a");
+    if (file == NULL) {
+        perror("파일을 열 수 없습니다.");
+        return;
+    }
+
+    // 현재 시간을 기록
+    time_t currentTime = time(NULL);
+    char* timeStr = ctime(&currentTime);
+    timeStr[strcspn(timeStr, "\n")] = 0; // ctime이 반환하는 개행 제거
+
+    fprintf(file, "게임 결과 (%s):\n", timeStr);
+    fprintf(file, "승자: %d\n", winner);
+    fprintf(file, "패자: %d\n", loser);
+    fprintf(file, "========================\n");
+
+    fclose(file);
+    printf("게임 결과가 game_result.txt 파일에 저장되었습니다.\n");
 }

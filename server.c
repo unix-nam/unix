@@ -53,6 +53,7 @@ void notify_other_client(int disconnected_client) {
     if (client_sockets[other_client] != -1) {
         printf("플레이어 %d가 게임을 포기하였습니다. 플레이어 %d가 승리하였습니다.\n", disconnected_client + 1, other_client + 1);
         send_message(client_sockets[other_client], "VICTORY");
+        save_game_result(other_client + 1, disconnected_client + 1); // 게임 결과 저장
         // 송신 방향 종료
         shutdown(client_sockets[other_client], SHUT_WR);
         // 메시지가 전송될 시간을 확보하기 위해 잠시 대기
@@ -168,6 +169,7 @@ int handle_attack(int attacker, int defender) {
         // 피공격자 패배
         send_message(client_sockets[defender], "DEFEAT");
         printf("플레이어 %d가 게임에서 승리했습니다.\n", attacker + 1);
+        save_game_result(attacker + 1, defender + 1); // 게임 결과 저장
         return 1; // 게임 종료
     }
 
