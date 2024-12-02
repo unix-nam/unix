@@ -1,6 +1,7 @@
 // battleship.c
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 #include "battleship.h"
 #include <time.h>
 
@@ -62,17 +63,17 @@ void place_ship(char board[BOARD_SIZE][BOARD_SIZE], int x, int y, int size, char
 
 // 게임 결과 저장
 void save_game_result(int winner, int loser) {
-    FILE* file = fopen("game_result.txt", "a");
-    if (file == NULL) {
-        perror("파일을 열 수 없습니다.");
-        return;
+    FILE* file = fopen("game_result.txt", "a"); // "a" 모드 사용해 파일에 데이터를 추가
+    if (!file) {
+        printf("파일을 열 수 없습니다. %s\n", strerror(errno));
     }
 
     // 현재 시간을 기록
     time_t currentTime = time(NULL);
     char* timeStr = ctime(&currentTime);
-    timeStr[strcspn(timeStr, "\n")] = 0; // ctime이 반환하는 개행 제거
+    timeStr[strcspn(timeStr, "\n")] = 0; // ctime이 반환하는 문자열의 끝에 있는 개행 제거
 
+    // 결과를 파일에 저장
     fprintf(file, "게임 결과 (%s):\n", timeStr);
     fprintf(file, "승자: %d\n", winner);
     fprintf(file, "패자: %d\n", loser);

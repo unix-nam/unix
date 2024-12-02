@@ -44,7 +44,7 @@ int read_line_from_buffer(char *buffer, int *start, int end, char *line);
 // 두 개의 보드를 나란히 출력
 void print_combined_board() {
     // 콘솔 화면 초기화 (ANSI 이스케이프 시퀀스)
-    printf("\033[H\033[J"); // 화면 초기화 및 커서 이동
+    // printf("\033[H\033[J"); // 화면 초기화 및 커서 이동
 
     printf("\n내 배 보드               | 공격 결과 보드\n");
     printf("  ");
@@ -221,7 +221,9 @@ int main() {
             // 메시지 처리
             if (strcmp(line, "YOUR_TURN") == 0) {
                 // 자신의 턴일 때 공격 입력
+
                 printf("당신의 턴입니다. 30초 안에 공격할 좌표를 입력하세요.\n");
+
                 Attack attack;
                 int valid_attack = 0;
 
@@ -260,14 +262,18 @@ int main() {
             else if (strcmp(line, "HIT") == 0) {
                 // 공격이 명중했을 때
                 printf("명중!\n");
+                sleep(2);
                 if (last_attack_x != -1 && last_attack_y != -1) {
                     enemy_board[last_attack_x][last_attack_y] = 'X';
                 }
+                
                 print_combined_board();
+                printf("\n");
             }
             else if (strcmp(line, "MISS") == 0) {
                 // 공격이 실패했을 때
                 printf("실패.\n");
+                sleep(2);
                 if (last_attack_x != -1 && last_attack_y != -1) {
                     enemy_board[last_attack_x][last_attack_y] = 'O';
                 }
@@ -289,10 +295,12 @@ int main() {
                     if (strcmp(opp_result, "HIT") == 0) {
                         board[opp_x][opp_y] = 'X';
                         printf("상대방이 (%d, %d)을 공격했습니다. 명중!\n", opp_x, opp_y);
+                        sleep(2);
                     }
                     else if (strcmp(opp_result, "MISS") == 0) {
                         // board[opp_x][opp_y] = 'O';
                         printf("상대방이 (%d, %d)을 공격했습니다. 실패.\n", opp_x, opp_y);
+                        sleep(2);
                     }
                     print_combined_board();
                 } else {
