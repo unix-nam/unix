@@ -12,8 +12,8 @@
 #include "battleship.h"
 
 #define MAX_PLAYERS 2
-#define TURN_TIMEOUT 30 // 턴 제한 시간 (초)
-#define BUFFER_SIZE 1024 // Increased buffer size
+#define TURN_TIMEOUT 30 // 공격 제한 시간
+#define BUFFER_SIZE 1024 
 
 char boards[MAX_PLAYERS][BOARD_SIZE][BOARD_SIZE];
 int client_sockets[MAX_PLAYERS];
@@ -35,7 +35,7 @@ int send_all(int sock, const void *buffer, size_t length) {
 
 // 메시지 전송 함수
 int send_message(int client_socket, const char *message) {
-    // 메시지 끝에 개행 문자 추가
+
     char msg_with_newline[BUFFER_SIZE];
     snprintf(msg_with_newline, sizeof(msg_with_newline), "%s\n", message);
 
@@ -70,11 +70,12 @@ int recv_all(int sock, void *buffer, size_t length) {
     while (total_received < length) {
         ssize_t received = recv(sock, ptr + total_received, length - total_received, 0);
         if (received <= 0) {
-            return -1; // 에러 발생
+            return -1;
         }
+
         total_received += received;
     }
-    return 0; // 성공
+    return 0;
 }
 
 // 클라이언트로부터 보드 수신
@@ -92,7 +93,7 @@ int receive_board(int client_socket, int player) {
 // 공격 처리
 int handle_attack(int attacker, int defender) {
     Attack attack;
-    char result[BUFFER_SIZE];
+    char result[BUFFER_SIZE];   
     memset(&attack, 0, sizeof(Attack));
     memset(result, 0, sizeof(result));
 
@@ -119,6 +120,7 @@ int handle_attack(int attacker, int defender) {
         send_message(client_sockets[attacker], "TIMEOUT_DEFEAT");
         send_message(client_sockets[defender], "TIMEOUT_VICTORY");
         printf("플레이어 %d가 시간 초과로 패배하였습니다.\n", attacker + 1);
+        save_game_result(defender + 1, attacker + 1);
         return 1; // 게임 종료
     }
 
@@ -175,7 +177,7 @@ int handle_attack(int attacker, int defender) {
 
     // 공격 결과를 피공격자에게 전달
     char opp_attack_msg[BUFFER_SIZE];
-    char *attack_result = (boards[defender][attack.x][attack.y] == 'X') ? "HIT" : "MISS";
+    char *attack_result = (boards[defender][attack.x][attack.y] == 'X') ? "HIT" : "MISS"; // 공격 성공 or 실패
     snprintf(opp_attack_msg, sizeof(opp_attack_msg), "OPPONENT_ATTACK %d %d %s", attack.x, attack.y, attack_result);
     send_message(client_sockets[defender], opp_attack_msg);
 
@@ -198,7 +200,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    // 소켓 옵션 설정 (포트 재사용)
+    // 소켓 옵션 설정
     int opt = 1;
     if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
         perror("setsockopt 실패");
@@ -232,6 +234,7 @@ int main() {
         client_sockets[i] = accept(server_fd, (struct sockaddr *)&address, &addrlen);
         if (client_sockets[i] == -1) {
             perror("클라이언트 연결 실패");
+            
             // 이미 연결된 클라이언트들 종료
             for (int j = 0; j < i; j++) {
                 close(client_sockets[j]);
