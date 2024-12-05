@@ -11,7 +11,7 @@
 #include "battleship.h"
 
 #define NUM_SHIPS 5
-#define BUFFER_SIZE 1024 // Increased buffer size
+#define BUFFER_SIZE 1024
 
 // 보드
 char board[BOARD_SIZE][BOARD_SIZE];         // 자신의 배치 보드
@@ -24,7 +24,7 @@ int sock = 0;
 int last_attack_x = -1;
 int last_attack_y = -1;
 
-// 배 정보
+// 배 정보 - 총 5개
 Ship ships[] = {
     {"항공모함", 5},
     {"전함", 4},
@@ -44,7 +44,7 @@ int read_line_from_buffer(char *buffer, int *start, int end, char *line);
 // 두 개의 보드를 나란히 출력
 void print_combined_board() {
     // 콘솔 화면 초기화 (ANSI 이스케이프 시퀀스)
-    // printf("\033[H\033[J"); // 화면 초기화 및 커서 이동
+    printf("\033[H\033[J"); // 화면 초기화 및 커서 이동
 
     printf("\n내 배 보드               | 공격 결과 보드\n");
     printf("  ");
@@ -166,7 +166,7 @@ int read_line_from_buffer(char *buffer, int *start, int end, char *line) {
 }
 
 int main() {
-    struct sockaddr_in serv_addr;
+    struct sockaddr_in serv_addr; // 소켓 사용
     char buffer[BUFFER_SIZE];
     int buffer_start = 0;
     int buffer_end = 0;
@@ -201,7 +201,7 @@ int main() {
     initialize_boards();
     place_and_send_ships(sock);
 
-    // 게임 루프
+    // 게임 루프 돌리기
     while (1) {
         // 데이터를 수신하여 버퍼에 저장
         int bytes_received = recv(sock, buffer + buffer_end, sizeof(buffer) - buffer_end - 1, 0);
@@ -221,7 +221,6 @@ int main() {
             // 메시지 처리
             if (strcmp(line, "YOUR_TURN") == 0) {
                 // 자신의 턴일 때 공격 입력
-
                 printf("당신의 턴입니다. 30초 안에 공격할 좌표를 입력하세요.\n");
 
                 Attack attack;
@@ -246,7 +245,7 @@ int main() {
                     last_attack_x = attack.x;
                     last_attack_y = attack.y;
 
-                    // Convert to network byte order before sending
+                    // 전송을 위한 네트워크 바이트 순서로 변환
                     attack.x = htonl(attack.x);
                     attack.y = htonl(attack.y);
 
@@ -342,10 +341,12 @@ int main() {
 
         // 버퍼를 정리하여 사용하지 않은 데이터를 앞으로 이동
         if (buffer_start == buffer_end) {
+
             // 버퍼를 모두 사용했으므로 인덱스 초기화
             buffer_start = 0;
             buffer_end = 0;
-        } else if (buffer_start > 0) {
+        }
+        else if (buffer_start > 0) {
             // 사용되지 않은 데이터를 버퍼의 시작으로 이동
             memmove(buffer, buffer + buffer_start, buffer_end - buffer_start);
             buffer_end -= buffer_start;
